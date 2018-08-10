@@ -100,4 +100,19 @@ class Bio_Collection_Public {
 
 	}
 
+
+	public function single_page_templates( $single_page_templates  ){
+
+		global $post;
+
+		if( $post->post_type == 'person'){
+
+			$single_page_templates = plugin_dir_path( __FILE__ ) .'templates/person-single.php';
+
+		}
+
+		return $single_page_templates;
+
+	}
+
 }

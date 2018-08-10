@@ -35,7 +35,7 @@ class Bio_Collection {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Bio_Collection_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Bio_Collection_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Bio_Collection {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Bio_Collection {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -154,8 +154,8 @@ class Bio_Collection {
 
 		$plugin_admin = new Bio_Collection_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'init', $plugin_admin, 'register_bio_collection_post_type');
-		$this->loader->add_filter( 'rwmb_meta_boxes', $plugin_admin, 'register_meta_data');
+		$this->loader->add_action( 'init', $plugin_admin, 'register_bio_collection_post_type' );
+		$this->loader->add_filter( 'rwmb_meta_boxes', $plugin_admin, 'register_meta_data' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
@@ -174,6 +174,7 @@ class Bio_Collection {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_filter( 'single_template', $plugin_public, 'single_page_templates' );
 
 	}
 

@@ -2,3 +2,20 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+article.person{
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.person .round-image{
+    width:25%;
+    display: flex;
+}
+.person .round-image img{
+    display: block;
+    border-radius: 50%;
+}
