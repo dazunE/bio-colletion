@@ -115,4 +115,60 @@ class Bio_Collection_Public {
 
 	}
 
+	public function bio_collection_short_codes(){
+
+		$short_codes = array(
+			'list',
+			'form',
+			'search'
+		);
+
+		foreach ( $short_codes as $short_code ) {
+
+			$function = 'bio_'.str_replace('-','_', $short_code );
+			add_shortcode( $short_code , array( $this , $function ));
+
+		}
+
+	}
+
+	public function bio_list( $atts , $content = null ) {
+
+		$atts = shortcode_atts(
+			array(
+				'search' => false,
+				'count'  => 10
+			), $atts
+		);
+
+		$args = array(
+			'post_type' => 'person',
+			'post_status' 	=> 'publish',
+			'posts_per_page'=> $atts['count'],
+		);
+
+		$query = new WP_Query( $args );
+
+		ob_start();
+
+		if( $query->have_posts() ){
+			while ( $query->have_posts()){
+				$query->the_post();
+
+				require plugin_dir_path( __FILE__ ).'/partials/bio-collection-list.php';
+
+			}
+		}
+
+		$data = ob_get_contents();
+
+		ob_end_clean();
+
+		echo $data;
+
+
+
+	}
+
+
 }

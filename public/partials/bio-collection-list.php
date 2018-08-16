@@ -14,3 +14,9 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
+<?php
+
+global $post;
+
+echo get_the_title( $post->ID);
