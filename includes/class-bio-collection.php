@@ -158,6 +158,7 @@ class Bio_Collection {
 		$this->loader->add_filter( 'rwmb_meta_boxes', $plugin_admin, 'register_meta_data' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'tgmpa_register', $plugin_admin, 'plugin_dependencies' );
 
 	}
 
@@ -175,7 +176,7 @@ class Bio_Collection {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_filter( 'single_template', $plugin_public, 'single_page_templates' );
-		$this->loader->add_action('init', $plugin_public, 'bio_collection_short_codes');
+		$this->loader->add_action( 'init', $plugin_public, 'bio_collection_short_codes' );
 
 	}
 

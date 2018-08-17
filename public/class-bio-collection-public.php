@@ -27,7 +27,7 @@ class Bio_Collection_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,7 +36,7 @@ class Bio_Collection_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
@@ -44,13 +44,14 @@ class Bio_Collection_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 *
+	 * @param      string $plugin_name The name of the plugin.
+	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -101,13 +102,13 @@ class Bio_Collection_Public {
 	}
 
 
-	public function single_page_templates( $single_page_templates  ){
+	public function single_page_templates( $single_page_templates ) {
 
 		global $post;
 
-		if( $post->post_type == 'person'){
+		if ( $post->post_type == 'person' ) {
 
-			$single_page_templates = plugin_dir_path( __FILE__ ) .'templates/person-single.php';
+			$single_page_templates = plugin_dir_path( __FILE__ ) . 'templates/person-single.php';
 
 		}
 
@@ -115,58 +116,97 @@ class Bio_Collection_Public {
 
 	}
 
-	public function bio_collection_short_codes(){
+	public function bio_collection_short_codes() {
 
 		$short_codes = array(
 			'list',
-			'form',
+			'submit',
 			'search'
 		);
 
 		foreach ( $short_codes as $short_code ) {
 
-			$function = 'bio_'.str_replace('-','_', $short_code );
-			add_shortcode( $short_code , array( $this , $function ));
+			$function = 'bio_' . str_replace( '-', '_', $short_code );
+			add_shortcode( $short_code, array( $this, $function ) );
 
 		}
 
 	}
 
-	public function bio_list( $atts , $content = null ) {
+	public function bio_list( $atts ) {
 
 		$atts = shortcode_atts(
 			array(
 				'search' => false,
-				'count'  => 10
+				'wrap'   => false,
+				'col'    => false,
+				'count'  => 1
 			), $atts
 		);
 
+		$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+
 		$args = array(
-			'post_type' => 'person',
-			'post_status' 	=> 'publish',
-			'posts_per_page'=> $atts['count'],
+			'post_type'   => 'person',
+			'post_status' => 'publish',
+			'paged'       => $paged
 		);
+
+		$col_class = ( $atts['col'] ) ? 'col-' . $atts['col'] : 'col-3';
 
 		$query = new WP_Query( $args );
 
+		$before = '<div class="' . $col_class . '">';
+		$after  = '</div>';
+
 		ob_start();
 
-		if( $query->have_posts() ){
-			while ( $query->have_posts()){
-				$query->the_post();
-
-				require plugin_dir_path( __FILE__ ).'/partials/bio-collection-list.php';
-
-			}
+		if( $atts['search']){
+			bio_search_from();
 		}
+
+		echo '<div class="persons-wrap">';
+
+		if ( $query->have_posts() ) {
+
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				echo $before;
+				require plugin_dir_path( __FILE__ ) . '/partials/bio-collection-list.php';
+				echo $after;
+			}
+
+			wp_reset_query();
+
+		}
+
+		echo $after;
+		$data = ob_get_contents();
+		ob_end_clean();
+		return  $data;
+
+
+	}
+
+	public function bio_submit( $atts ) {
+
+		$atts = shortcode_atts(
+			array(
+				'wrap' => false,
+				'ajax' => true
+			),
+			$atts
+		);
+
+		ob_start();
+
+		require plugin_dir_path( __FILE__ ) . '/partials/bio-submit.php';
 
 		$data = ob_get_contents();
 
 		ob_end_clean();
 
-		echo $data;
-
-
+		return $data;
 
 	}
 

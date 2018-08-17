@@ -137,7 +137,7 @@ class Bio_Collection_Admin {
 			'label'               => __( 'Person', 'bio-collection' ),
 			'description'         => __( 'This is to collect bio of persons', 'bio-collection' ),
 			'labels'              => $labels,
-			'supports'            => array( 'title', 'editor', 'thumbnail', 'comments', 'page-attributes' ),
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'comments', 'page-attributes', 'excerpt' ),
 			'hierarchical'        => true,
 			'public'              => true,
 			'show_ui'             => true,
@@ -162,34 +162,34 @@ class Bio_Collection_Admin {
 
 		$text_domain  = TEXT_DOMAIN;
 		$meta_boxes[] = array(
-			'title'  => __( 'Other Infomations', $text_domain ),
-			'fields' => array(
+			'title'      => __( 'Other Infomations', $text_domain ),
+			'fields'     => array(
 				array(
 					'name'       => __( 'Birth', $text_domain ),
-					'id'         =>  $text_domain. 'birth_date',
+					'id'         => $text_domain . '_birth_date',
 					'type'       => 'date',
-					'class' => 'widefat',
+					'class'      => 'widefat',
 					// jQuery date picker options. See here http://jqueryui.com/demos/datepicker
 					'js_options' => array(
 						'autoSize'        => true,
 						'buttonText'      => __( 'Select Birth Date', $text_domain ),
 						'dateFormat'      => __( 'yy-mm-dd', $text_domain ),
-						'changeYear' =>  true,
-						'yearRange' => "1700:2000",
+						'changeYear'      => true,
+						'yearRange'       => "1700:2000",
 						'showButtonPanel' => true,
 					),
 				),
 				array(
 					'name'       => __( 'Death Date', $text_domain ),
-					'id'         =>  $text_domain. 'death_date',
+					'id'         => $text_domain . '_death_date',
 					'type'       => 'date',
-					'class' => 'widefat',
+					'class'      => 'widefat',
 					// jQuery date picker options. See here http://jqueryui.com/demos/datepicker
 					'js_options' => array(
 						'autoSize'        => true,
 						'buttonText'      => __( 'Select Date', $text_domain ),
 						'dateFormat'      => __( 'yy-mm-dd', $text_domain ),
-						'changeYear' =>  true,
+						'changeYear'      => true,
 						'showButtonPanel' => true,
 					),
 				),
@@ -200,6 +200,50 @@ class Bio_Collection_Admin {
 		return $meta_boxes;
 
 
+	}
+
+	public function plugin_dependencies() {
+
+		$plugins = array(
+			array(
+				'name'             => 'Contact Form 7', // The plugin name.
+				'slug'             => 'contact-form-7', // The plugin slug (typically the folder name).
+				'required'         => true,
+				'force_activation' => true,
+			)
+		);
+
+		$config = array(
+			'id'           => 'bio_collection',
+			// Unique ID for hashing notices for multiple instances of TGMPA.
+			'default_path' => '',
+			// Default absolute path to bundled plugins.
+			'menu'         => 'tgmpa-install-plugins',
+			// Menu slug.
+			'parent_slug'  => 'plugins.php',
+			// Parent menu slug.
+			'capability'   => 'manage_options',
+			// Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+			'has_notices'  => true,
+			// Show admin notices or not.
+			'dismissable'  => true,
+			// If false, a user cannot dismiss the nag message.
+			'dismiss_msg'  => '',
+			// If 'dismissable' is false, this message will be output at top of nag.
+			'is_automatic' => false,
+			// Automatically activate plugins after installation or not.
+			'message'      => '',
+			// Message to output right before the plugins table.
+			'strings' => array(
+				'notice_can_install_required'     => _n_noop(
+				'This Plugin requires the following plugin: %1$s. for the front-end post submission',
+				'This Plugin requires the following plugins: %1$s.',
+				'bio_collection'
+			),
+			)
+		);
+
+		tgmpa( $plugins , $config );
 	}
 
 }

@@ -67,6 +67,17 @@ register_deactivation_hook( __FILE__, 'deactivate_bio_collection' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-bio-collection.php';
 
 /*
+ * Custom Functions for plugin
+ */
+require_once plugin_dir_path( __FILE__ ).'includes/custom-functions.php';
+
+/*
+ * Plugin Dependencies
+ */
+
+require_once plugin_dir_path( __FILE__ ).'includes/class-tgm-plugin-activation.php';
+
+/*
  * Meta Box Library
  */
 
