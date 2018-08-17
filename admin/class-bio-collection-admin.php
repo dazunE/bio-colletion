@@ -101,7 +101,6 @@ class Bio_Collection_Admin {
 
 	}
 
-
 	public function register_bio_collection_post_type() {
 
 		$labels = array(
@@ -244,6 +243,22 @@ class Bio_Collection_Admin {
 		);
 
 		tgmpa( $plugins , $config );
+	}
+
+	public function create_submit_form(){
+
+		$default_form = array(
+			'post_type' => 'wpcf7_contact_form',
+			'post_title' => 'Submit Bio',
+			'post_status'   => 'publish',
+			'post_author' => 1,
+
+ 		);
+
+		$form_id  = wp_insert_post( $default_form );
+
+		do_action('after_bio_form',$form_id );
+
 	}
 
 }
