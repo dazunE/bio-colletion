@@ -31,6 +31,7 @@ class Bio_Collection_Activator {
 	 */
 	public static function activate() {
 
+		do_action( 'bio_collection_activate' );
 	}
 
 }

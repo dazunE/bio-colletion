@@ -159,6 +159,7 @@ class Bio_Collection {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'tgmpa_register', $plugin_admin, 'plugin_dependencies' );
+		$this->loader->add_filter( 'wpcf7_default_template', $plugin_admin, 'create_submit_form');
 
 	}
 

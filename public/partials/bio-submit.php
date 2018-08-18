@@ -13,5 +13,5 @@
 ?>
 
 <div class="bio-submit-wrapper">
-
+  <?php echo do_shortcode('[contact-form-7 id="27" title="Submit Bio"]');?>
 </div>

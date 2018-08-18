@@ -233,32 +233,52 @@ class Bio_Collection_Admin {
 			// Automatically activate plugins after installation or not.
 			'message'      => '',
 			// Message to output right before the plugins table.
-			'strings' => array(
-				'notice_can_install_required'     => _n_noop(
-				'This Plugin requires the following plugin: %1$s. for the front-end post submission',
-				'This Plugin requires the following plugins: %1$s.',
-				'bio_collection'
-			),
+			'strings'      => array(
+				'notice_can_install_required' => _n_noop(
+					'This Plugin requires the following plugin: %1$s. for the front-end post submission',
+					'This Plugin requires the following plugins: %1$s.',
+					'bio_collection'
+				),
 			)
 		);
 
-		tgmpa( $plugins , $config );
+		tgmpa( $plugins, $config );
 	}
 
-	public function create_submit_form(){
+	public function create_submit_form( $template, $prop ) {
 
-		$default_form = array(
-			'post_type' => 'wpcf7_contact_form',
-			'post_title' => 'Submit Bio',
-			'post_status'   => 'publish',
-			'post_author' => 1,
+		if ( 'form' == $prop ) {
+			$template = $this->new_defult_form();
+		}
 
- 		);
+		return apply_filters('bio_collection_form', $template , $prop );
 
-		$form_id  = wp_insert_post( $default_form );
+	}
 
-		do_action('after_bio_form',$form_id );
+	public function new_defult_form() {
+		$template = sprintf(
+			'
+					<label> %2$s %1$s
+					    [text* your-name] </label>
+					
+					<label> %3$s %1$s
+					    [email* your-email] </label>
+					
+					<label> %4$s
+					    [text your-subject] </label>
+					
+					<label> %5$s
+					    [textarea your-message] </label>
+					    [submit "%6$s"]',
 
+			__( '(required)', 'contact-form-7' ),
+			__( 'Dasun Name', 'contact-form-7' ),
+			__( 'Dasun Email', 'contact-form-7' ),
+			__( 'Subject', 'contact-form-7' ),
+			__( 'Your Message', 'contact-form-7' ),
+			__( 'Send', 'contact-form-7' ) );
+
+		return trim( $template );
 	}
 
 }
