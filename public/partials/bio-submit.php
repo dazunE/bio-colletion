@@ -14,7 +14,6 @@
 
 <div class="bio-submit-wrapper">
   <div class="bio-submit">
-      <h2><?php echo __('Submit a bio', TEXT_DOMAIN); ?></h2>
       <form>
           <h1 class="loading-text" data-text="ඔහොම හිටු...">ඔහොම හිටු...</h1>
           <div class="form-group half">
