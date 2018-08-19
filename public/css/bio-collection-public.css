@@ -88,3 +88,27 @@ Form
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+.loading-text{
+    display: none;
+}
+
+.loading-text {
+    position: relative;
+    color: rgba(0, 0, 0, .3);
+    font-size: 5em
+}
+.loading-text:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: 7em;
+    white-space: nowrap;
+    color: #3498db;
+    animation: loading 8s linear;
+}
+@keyframes loading {
+    0% {
+        max-width: 0;
+    }
+}

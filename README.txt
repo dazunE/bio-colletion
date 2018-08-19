@@ -26,4 +26,13 @@ e.g.
 == Frequently Asked Questions ==
 
 
-`<?php code(); // goes in backticks ?>`
+`Display the submitted profiles` - Create a new page and add the following short code [list]
+you can customize number of columns by adding [list col="4"] ,
+3 - will add four columns
+4 - will add three columns
+6 - will add two columns
+
+you can add number of post per page by adding [list count="10"] etc.
+
+`Frontend submission forms` - Create a new page and add following short code to display [submit]
+

@@ -73,7 +73,7 @@ class Bio_Collection_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		wp_enqueue_style( $this->plugin_name . 'date-picker', plugin_dir_url( __FILE__ ) . 'css/datepicker.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bio-collection-public.css', array(), $this->version, 'all' );
 
 	}
@@ -97,7 +97,14 @@ class Bio_Collection_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bio-collection-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'date-picker', plugin_dir_url( __FILE__ ) . 'js/datepicker.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name.'-validator', plugin_dir_url( __FILE__).'js/validator.min.js',array(), $this->version, true );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bio-collection-public.js', array( 'jquery' ), $this->version, true );
+		wp_localize_script( $this->plugin_name, 'bioAjax', array(
+				'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+				'ajaxNonce' => wp_create_nonce( "submit_bio_nonce" )
+			)
+		);
 
 	}
 
@@ -161,7 +168,7 @@ class Bio_Collection_Public {
 
 		ob_start();
 
-		if( $atts['search']){
+		if ( $atts['search'] ) {
 			bio_search_from();
 		}
 
@@ -183,7 +190,8 @@ class Bio_Collection_Public {
 		echo $after;
 		$data = ob_get_contents();
 		ob_end_clean();
-		return  $data;
+
+		return $data;
 
 
 	}
@@ -207,6 +215,32 @@ class Bio_Collection_Public {
 		ob_end_clean();
 
 		return $data;
+
+	}
+
+	public function submit_bio() {
+
+		$data = $_POST['formData'];
+
+		$args = array(
+			'post_type'    => 'person',
+			'post_status'  => 'publish',
+			'post_title'   => $data['personName'],
+			'post_content' => $data['personBio'],
+			'post_author'  => $data['user']
+		);
+
+		$post_id = wp_insert_post( $args );
+
+		if( isset( $post_id ) ){
+			update_post_meta($post_id,'bio-collection_birth_date',$data['birthDate'],'');
+			update_post_meta($post_id,'bio-collection_death_date',$data['deathDate'],'');
+			wp_send_json_success( $post_id );
+
+		} else{
+
+			wp_send_json_error();
+		}
 
 	}
 

@@ -158,9 +158,29 @@ class Bio_Collection {
 		$this->loader->add_filter( 'rwmb_meta_boxes', $plugin_admin, 'register_meta_data' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'tgmpa_register', $plugin_admin, 'plugin_dependencies' );
-		$this->loader->add_filter( 'wpcf7_default_template', $plugin_admin, 'create_submit_form');
 
+
+	}
+
+	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The name of the plugin.
+	 */
+	public function get_plugin_name() {
+		return $this->plugin_name;
+	}
+
+	/**
+	 * Retrieve the version number of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
+	 */
+	public function get_version() {
+		return $this->version;
 	}
 
 	/**
@@ -178,6 +198,7 @@ class Bio_Collection {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_filter( 'single_template', $plugin_public, 'single_page_templates' );
 		$this->loader->add_action( 'init', $plugin_public, 'bio_collection_short_codes' );
+		$this->loader->add_action( 'wp_ajax_submit_bio', $plugin_public, 'submit_bio' );
 
 	}
 
@@ -191,17 +212,6 @@ class Bio_Collection {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
@@ -209,16 +219,6 @@ class Bio_Collection {
 	 */
 	public function get_loader() {
 		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
 	}
 
 }
