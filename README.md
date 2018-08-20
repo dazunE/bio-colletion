@@ -9,6 +9,11 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin is to maintain the collections of bios of the people 
+please not that front-end form submission contains only basic validations
+and this plugin was done to get the job done ( of collecting bio ).
+
+TODO ` bio submit froms needs to be secured.`
+
 
 == Description ==
 

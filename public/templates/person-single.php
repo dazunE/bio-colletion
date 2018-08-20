@@ -11,8 +11,11 @@
  */
 
 get_header();
-
+/*
+ * TODO Needs to add basic security handling, pushing this version to get the job done in protected site
+ */
 ?>
+
 
 <div class="wrap">
 	<div id="primary" class="content-area">

@@ -158,6 +158,8 @@ class Bio_Collection {
 		$this->loader->add_filter( 'rwmb_meta_boxes', $plugin_admin, 'register_meta_data' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		//$this->loader->add_filter( 'manage_person_posts_columns', $plugin_admin, 'set_custom_edit_person_columns' );
+		//$this->loader->add_action( 'manage_person_posts_custom_column', $plugin_admin, 'add_bio_admin_columns');
 
 
 	}

@@ -202,5 +202,30 @@ class Bio_Collection_Admin {
 	}
 
 
+	public function set_custom_edit_person_columns( $columns ) {
+
+		$columns['birth_date'] = __( 'Birth Date', TEXT_DOMAIN );
+		$columns['death_date'] = __( 'Date of Death', TEXT_DOMAIN );
+
+		return $columns;
+	}
+
+	public function add_bio_admin_columns( $columns, $post_ID ) {
+
+		switch ( $columns ) {
+
+			case 'birth_date':
+				$birth_date = get_post_meta( $post_ID, 'bio-collection_birth_date', true );
+				echo $birth_date;
+				break;
+
+			case 'death_date':
+				$death_date = get_post_meta( $post_ID, 'bio-collection_death_date', true );
+				echo $death_date;
+				break;
+		}
+	}
+
+
 }
 
