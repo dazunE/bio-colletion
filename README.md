@@ -1,3 +1,5 @@
+` please note that , list submission form is not secure, and it's needs to be secured. `
+
 === Plugin Name ===
 Contributors: dazunj
 Donate link: http://dasun.blog
